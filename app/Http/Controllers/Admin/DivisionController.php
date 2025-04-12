@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Division;
+use Illuminate\Http\Request;
+
+class DivisionController extends Controller
+{
+    public function index()
+    {
+        $divisions = Division::all();
+
+        return view('pages.divisions.index', compact('divisions'));
+    }
+
+    public function create()
+    {
+        return view('pages.divisions.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+        ], [
+            'name.required' => "Nama divisi tidak boleh kosong!",
+        ]);
+
+        Division::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()->route('index.divisions')->with('success', 'Divisi berhasil ditambahkan!');
+    }
+
+    public function edit($id)
+    {
+        $division = Division::findOrFail($id);
+
+        return view('pages.divisions.edit', compact('division'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $division = Division::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'nullable'
+        ], [
+            'name.required' => "Nama divisi tidak boleh kosong!",
+        ]);
+
+        $division->update($validated);
+
+        return redirect()->route('index.divisions')->with('success', 'Divisi berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        $customer = Division::FindOrFail($id);
+        $customer->delete();
+
+        return redirect()->route('index.divisions')->with('success', 'Divisi berhasil dihapus!');
+    }
+}
