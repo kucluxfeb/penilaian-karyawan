@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('criteria_id');
             $table->string('name');
-            $table->integer('weight');
+            $table->decimal('weight');
             $table->timestamps();
 
             $table->foreign('criteria_id')->references('id')->on('criterias')->onUpdate('cascade')->onDelete('cascade');

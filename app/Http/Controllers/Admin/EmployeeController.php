@@ -26,41 +26,34 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'fullname' => 'required',
-            'divisionId' => 'required',
+            'division_id' => 'required',
             'nip' => 'required',
             'gender' => 'required',
-            'birthPlace' => 'required',
-            'birthDate' => 'required|date|before_or_equal:today',
+            'birth_place' => 'required',
+            'birth_date' => 'required|date|before_or_equal:today',
             'address' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'fullname.required' => "Nama lengkap tidak boleh kosong!",
-            'divisionId.required' => "Divisi tidak boleh kosong!",
+            'division_id.required' => "Divisi tidak boleh kosong!",
             'nip.required' => "NIP tidak boleh kosong!",
             'gender.required' => "Jenis kelamin tidak boleh kosong!",
-            'birthPlace.required' => "Tempat lahir tidak boleh kosong!",
-            'birthDate.required' => "Tanggal lahir tidak boleh kosong!",
-            'birthDate.before_or_equal' => "Tanggal lahir tidak boleh melebihi hari ini!",
+            'birth_place.required' => "Tempat lahir tidak boleh kosong!",
+            'birth_date.required' => "Tanggal lahir tidak boleh kosong!",
+            'birth_date.before_or_equal' => "Tanggal lahir tidak boleh melebihi hari ini!",
             'address.required' => "Alamat tidak boleh kosong!",
+            'photo.image' => "File yang diunggah harus berupa gambar!",
+            'photo.mimes' => "Format foto harus jpeg, png, atau jpg!",
+            'photo.max' => "Ukuran foto maksimal 2MB!",
         ]);
 
-        $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public');
+            $data['photo'] = $request->file('photo')->store('employees', 'public');
         }
 
-        Employee::create([
-            'fullname' => $request->input('fullname'),
-            'division_id' => $request->input('divisionId'),
-            'nip' => $request->input('nip'),
-            'gender' => $request->input('gender'),
-            'birth_place' => $request->input('birthPlace'),
-            'birth_date' => $request->input('birthDate'),
-            'address' => $request->input('address'),
-            'photo' => $photoPath,
-        ]);
+        Employee::create($data);
 
         return redirect()->route('index.employees')->with('success', 'Karyawan berhasil ditambahkan!');
     }
@@ -74,50 +67,51 @@ class EmployeeController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $employee = Employee::findOrFail($id);
+    {
+        $employee = Employee::findOrFail($id);
 
-    $data = $request->validate([
-        'fullname' => 'required',
-        'divisionId' => 'required',
-        'nip' => 'required',
-        'gender' => 'required',
-        'birthPlace' => 'required',
-        'birthDate' => 'required|date|before_or_equal:today',
-        'address' => 'required',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ], [
-        'fullname.required' => "Nama lengkap tidak boleh kosong!",
-        'divisionId.required' => "Divisi tidak boleh kosong!",
-        'nip.required' => "NIP tidak boleh kosong!",
-        'gender.required' => "Jenis kelamin tidak boleh kosong!",
-        'birthPlace.required' => "Tempat lahir tidak boleh kosong!",
-        'birthDate.required' => "Tanggal lahir tidak boleh kosong!",
-        'birthDate.before_or_equal' => "Tanggal lahir tidak boleh melebihi hari ini!",
-        'address.required' => "Alamat tidak boleh kosong!",
-    ]);
+        $data = $request->validate([
+            'fullname' => 'required',
+            'division_id' => 'required',
+            'nip' => 'required',
+            'gender' => 'required',
+            'birth_place' => 'required',
+            'birth_date' => 'required|date|before_or_equal:today',
+            'address' => 'required',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'fullname.required' => "Nama lengkap tidak boleh kosong!",
+            'division_id.required' => "Divisi tidak boleh kosong!",
+            'nip.required' => "NIP tidak boleh kosong!",
+            'gender.required' => "Jenis kelamin tidak boleh kosong!",
+            'birth_place.required' => "Tempat lahir tidak boleh kosong!",
+            'birth_date.required' => "Tanggal lahir tidak boleh kosong!",
+            'birth_date.before_or_equal' => "Tanggal lahir tidak boleh melebihi hari ini!",
+            'address.required' => "Alamat tidak boleh kosong!",
+            'photo.image' => "File yang diunggah harus berupa gambar!",
+            'photo.mimes' => "Format foto harus jpeg, png, atau jpg!",
+            'photo.max' => "Ukuran foto maksimal 2MB!",
+        ]);
 
-    if ($request->hasFile('photo')) {
-        if ($employee->photo && \Storage::exists($employee->photo)) {
-            \Storage::delete($employee->photo);
+        if ($request->hasFile('photo')) {
+            if ($employee->photo && \Storage::disk('public')->exists($employee->photo)) {
+                \Storage::disk('public')->delete($employee->photo);
+            }
+
+            $data['photo'] = $request->file('photo')->store('employees', 'public');
         }
 
-        $photoPath = $request->file('photo')->store('employees', 'public');
-        $data['photo'] = $photoPath;
+        $employee->update($data);
+
+        return redirect()->route('index.employees')->with('success', 'Karyawan berhasil diperbarui!');
     }
-
-    $employee->update($data);
-
-    return redirect()->route('index.employees')->with('success', 'Karyawan berhasil diperbarui!');
-}
-
 
     public function destroy($id)
     {
         $employee = Employee::FindOrFail($id);
 
-        if ($employee->photo && \Storage::exists($employee->photo)) {
-            \Storage::delete($employee->photo);
+        if ($employee->photo && \Storage::disk('public')->exists($employee->photo)) {
+            \Storage::disk('public')->delete($employee->photo);
         }
 
         $employee->delete();

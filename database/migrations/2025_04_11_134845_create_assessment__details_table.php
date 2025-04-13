@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assessment__details', function (Blueprint $table) {
+        Schema::create('assessment_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('assessment_id');
             $table->unsignedBigInteger('sub_criteria_id');
-            $table->integer('value');
+            $table->decimal('value');
             $table->timestamps();
 
             $table->foreign('assessment_id')->references('id')->on('assessments')->onUpdate('cascade')->onDelete('cascade');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assessment__details');
+        Schema::dropIfExists('assessment_details');
     }
 };

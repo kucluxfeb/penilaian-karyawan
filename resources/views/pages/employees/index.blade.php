@@ -39,7 +39,7 @@
                                     <td>{{ $employee->nip }}</td>
                                     <td>{{ $employee->gender }}</td>
                                     <td>{{ $employee->birth_place }}</td>
-                                    <td>{{ $employee->birth_date }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($employee->birth_date)->format('d-m-Y') }}</td>
                                     <td>{{ $employee->address }}</td>
                                     <td>
                                         <div class="d-flex">
@@ -48,12 +48,12 @@
                                                 @method('DELETE')
 
                                                 <button type="button" onclick="confirmDelete({{ $employee->id }})" class="btn btn-danger btn-sm mr-2">
-                                                    <i class="fa fa-trash"></i>
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
 
                                             <a href="{{ route('edit.employee', $employee->id) }}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-edit"></i>
+                                                <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </div>
                                     </td>

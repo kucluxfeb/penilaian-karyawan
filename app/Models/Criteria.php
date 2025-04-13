@@ -8,8 +8,8 @@ class Criteria extends Model
 {
     protected $fillable = ['code', 'name', 'weight', 'type'];
 
-    public function subCriteria()
+    public function subCriterias()
     {
-        return $this->hasMany(Sub_Criteria::class);
+        return $this->hasMany(SubCriterias::class);
     }
 }

@@ -15,6 +15,6 @@ class Assessment_Detail extends Model
 
     public function subCriteria()
     {
-        return $this->belongsTo(Sub_Criteria::class);
+        return $this->belongsTo(SubCriterias::class);
     }
 }

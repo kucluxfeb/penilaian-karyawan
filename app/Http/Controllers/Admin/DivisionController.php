@@ -22,17 +22,14 @@ class DivisionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
         ], [
             'name.required' => "Nama divisi tidak boleh kosong!",
         ]);
 
-        Division::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
+        Division::create($data);
 
         return redirect()->route('index.divisions')->with('success', 'Divisi berhasil ditambahkan!');
     }
@@ -48,14 +45,14 @@ class DivisionController extends Controller
     {
         $division = Division::findOrFail($id);
 
-        $validated = $request->validate([
+        $data = $request->validate([
             'name' => 'required',
             'description' => 'nullable'
         ], [
             'name.required' => "Nama divisi tidak boleh kosong!",
         ]);
 
-        $division->update($validated);
+        $division->update($data);
 
         return redirect()->route('index.divisions')->with('success', 'Divisi berhasil diperbarui!');
     }

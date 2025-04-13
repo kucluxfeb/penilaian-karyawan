@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
-            $table->integer('weight');
+            $table->decimal('weight');
             $table->enum('type', ['Benefit', 'Cost']);
             $table->timestamps();
         });

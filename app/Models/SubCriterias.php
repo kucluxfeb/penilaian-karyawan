@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sub_Criteria extends Model
+class SubCriterias extends Model
 {
     protected $fillable = ['criteria_id', 'name', 'weight'];
 

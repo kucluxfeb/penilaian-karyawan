@@ -36,7 +36,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                 <a href="/" class="nav-link">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="bi bi-speedometer2"></i>
                     <span>Dashboard</span></a>
             </li>
 

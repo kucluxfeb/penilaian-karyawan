@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('division_id');
             $table->string('fullname');
-            $table->integer('nip');
+            $table->string('nip');
             $table->enum('gender', ['Laki-Laki', 'Perempuan']);
             $table->string('birth_place');
             $table->date('birth_date');
             $table->string('address');
+            $table->string('photo')->nullable();
             $table->timestamps();
 
             $table->foreign('division_id')->references('id')->on('divisions')->onUpdate('cascade')->onDelete('cascade');

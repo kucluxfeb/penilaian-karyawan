@@ -1,0 +1,71 @@
+@extends('layouts.main')
+
+@section('content')
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tambah Kriteria</h6>
+        </div>
+
+        <div class="card-body">
+            <form action="{{ route('store.criteria') }}" method="POST">
+                @csrf
+                @method('POST')
+
+                <div class="form-group">
+                    <label for="code" class="form-label">Kode</label>
+                    <input type="text" name="code" id="code" class="form-control @error('code') is-invalid @enderror" value="{{ old('code') }}">
+                    @error('code')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Nama Kriteria</label>
+                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="weight" class="form-label">Bobot</label>
+                    <select name="weight" id="weight" class="form-control @error('weight') is-invalid @enderror">
+                        <option value="" disabled selected>Pilih Bobot</option>
+                        <option value="1" {{ old('weight') == '1' ? 'selected' : '' }}>(1) Tidak Penting</option>
+                        <option value="2" {{ old('weight') == '2' ? 'selected' : '' }}>(2) Kurang Penting</option>
+                        <option value="3" {{ old('weight') == '3' ? 'selected' : '' }}>(3) Cukup Penting</option>
+                        <option value="4" {{ old('weight') == '4' ? 'selected' : '' }}>(4) Penting</option>
+                        <option value="5" {{ old('weight') == '5' ? 'selected' : '' }}>(5) Sangat Penting</option>
+                    </select>
+                    @error('weight')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label d-block">Tipe</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="type" id="typeBenefit" value="Benefit" {{ old('type') == 'Benefit' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="typeBenefit">Benefit</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="type" id="typeCost" value="Cost" {{ old('type') == 'Cost' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="typeCost">Cost</label>
+                    </div>
+                    @error('type')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="card-footer d-flex justify-content-end">
+                    <a href="{{ route('index.criterias') }}" class="btn btn-outline-secondary mr-3">Batal</a>
+                    <button type="submit" class="btn btn-primary">Tambah Kriteria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection

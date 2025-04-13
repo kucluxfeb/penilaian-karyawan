@@ -22,14 +22,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="divisionId" class="form-label">Divisi</label>
-                    <select name="divisionId" id="divisionId" class="form-control @error('divisionId') is-invalid @enderror">
+                    <label for="division_id" class="form-label">Divisi</label>
+                    <select name="division_id" id="division_id" class="form-control @error('division_id') is-invalid @enderror">
                         <option value="" disabled selected>Pilih Divisi</option>
                         @foreach ($divisions as $division)
-                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                            <option value="{{ $division->id }}" {{ old('division_id') == $division->id ? 'selected' : '' }}>{{ $division->name }}</option>
                         @endforeach
                     </select>
-                    @error('divisionId')
+                    @error('division_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -58,17 +58,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="birthPlace" class="form-label">Tempat Lahir</label>
-                    <input type="text" name="birthPlace" id="birthPlace" max="{{ now()->toDateString() }}" class="form-control @error('birthPlace') is-invalid @enderror" value="{{ old('birthPlace') }}">
-                    @error('birthPlace')
+                    <label for="birth_place" class="form-label">Tempat Lahir</label>
+                    <input type="text" name="birth_place" id="birth_place" max="{{ now()->toDateString() }}" class="form-control @error('birth_place') is-invalid @enderror" value="{{ old('birth_place') }}">
+                    @error('birth_place')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="birthDate" class="form-label">Tanggal Lahir</label>
-                    <input type="date" name="birthDate" id="birthDate" class="form-control @error('birthDate') is-invalid @enderror" value="{{ old('birthDate') }}">
-                    @error('birthDate')
+                    <label for="birth_date" class="form-label">Tanggal Lahir</label>
+                    <input type="date" name="birth_date" id="birth_date" class="form-control @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}">
+                    @error('birth_date')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -87,6 +87,9 @@
                     @error('photo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <small class="form-text text-muted">
+                        Format yang diperbolehkan: <strong>jpg, jpeg, png</strong>. Maksimal ukuran: <strong>2MB</strong>.
+                    </small>                
                 </div>
 
                 <div class="card-footer d-flex justify-content-end">
