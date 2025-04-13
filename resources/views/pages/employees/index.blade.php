@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Foto</th>
                                 <th>Nama Lengkap</th>
                                 <th>Divisi</th>
                                 <th>NIP</th>
@@ -26,6 +27,13 @@
                             @foreach ($employees as $employee)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        @if ($employee->photo)
+                                        <img src="{{ asset('storage/' . $employee->photo) }}" alt="{{ $employee->fullname }}" width="100">
+                                    @else
+                                        <p>Tidak ada foto</p>
+                                    @endif
+                                    </td>
                                     <td>{{ $employee->fullname }}</td>
                                     <td>{{ $employee->division->name }}</td>
                                     <td>{{ $employee->nip }}</td>

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <form action="{{ route('update.employee', $employee->id) }}" method="POST">
+    <form action="{{ route('update.employee', $employee->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -76,6 +76,19 @@
                     <label for="address" class="form-label">Alamat</label>
                     <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address', $employee->address) }}">
                     @error('address')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="photo" class="form-label">Foto</label>
+                    <input type="file" name="photo" id="photo" class="form-control-file @error('photo') is-invalid @enderror" value="{{ old('photo', $employee->photo) }}">
+                    @if ($employee->photo)
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/' . $employee->photo) }}" width="300" alt="foto {{ $employee->fullname }}">
+                    </div>
+                    @endif
+                    @error('photo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

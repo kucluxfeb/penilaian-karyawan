@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $fillable = ['division_id', 'fullname', 'nip', 'gender', 'birth_place', 'birth_date', 'address'];
+    protected $fillable = ['division_id', 'fullname', 'nip', 'gender', 'birth_place', 'birth_date', 'address', 'photo'];
 
     public function division()
     {
