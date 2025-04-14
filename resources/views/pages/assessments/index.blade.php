@@ -7,7 +7,7 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <form action="" method="POST">
+                    <form action="{{ route("store.assessment") }}" method="POST">
                         @csrf
                         @method('POST')
 

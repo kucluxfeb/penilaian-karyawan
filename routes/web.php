@@ -39,3 +39,4 @@ Route::put('/sub-criteria/{id}', [SubCriteriaController::class, 'update'])->name
 Route::delete('/sub-criteria/{id}', [SubCriteriaController::class, 'destroy'])->name('destroy.subCriteria');
 
 Route::get('/assessments', [AssessmentController::class, 'index'])->name('index.assessments');
+Route::post('/assessment/store', [AssessmentController::class, 'store'])->name('store.assessment');

@@ -15,6 +15,6 @@ class SubCriterias extends Model
 
     public function assessmentDetails()
     {
-        return $this->hasMany(Assessment_Detail::class);
+        return $this->hasMany(AssessmentDetail::class);
     }
 }

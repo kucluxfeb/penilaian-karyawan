@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Assessment_Detail extends Model
+class AssessmentDetail extends Model
 {
     protected $fillable = ['assessment_id', 'sub_criteria_id', 'value'];
 
