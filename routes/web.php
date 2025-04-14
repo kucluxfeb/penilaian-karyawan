@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DivisionController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Assessment\AssessmentController;
 use App\Http\Controllers\Assessment\CriteriaController;
 use App\Http\Controllers\Assessment\SubCriteriaController;
 use App\Http\Controllers\HomeController;
@@ -36,3 +37,5 @@ Route::post('sub-criteria/store', [SubCriteriaController::class, 'store'])->name
 Route::get('/sub-criteria/edit/{id}', [SubCriteriaController::class, 'edit'])->name('edit.subCriteria');
 Route::put('/sub-criteria/{id}', [SubCriteriaController::class, 'update'])->name('update.subCriteria');
 Route::delete('/sub-criteria/{id}', [SubCriteriaController::class, 'destroy'])->name('destroy.subCriteria');
+
+Route::get('/assessments', [AssessmentController::class, 'index'])->name('index.assessments');

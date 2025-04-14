@@ -15,6 +15,11 @@
             "path" => "/criterias",
             "icon" => "bi bi-list-check",
         ],
+        [
+            "title" => "Penilaian",
+            "path" => "/assessments",
+            "icon" => "bi bi-star-half",
+        ],
     ];
 @endphp
 
