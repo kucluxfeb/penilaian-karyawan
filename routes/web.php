@@ -40,3 +40,5 @@ Route::delete('/sub-criteria/{id}', [SubCriteriaController::class, 'destroy'])->
 
 Route::get('/assessments', [AssessmentController::class, 'index'])->name('index.assessments');
 Route::post('/assessment/store', [AssessmentController::class, 'store'])->name('store.assessment');
+Route::get('/assessment/result', [AssessmentController::class, 'result'])->name('result.assessment');
+Route::get('/result/export/{format}', [AssessmentController::class, 'export'])->name('export.assessment');

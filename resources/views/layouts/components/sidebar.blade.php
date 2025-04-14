@@ -32,7 +32,7 @@
                 <div class="sidebar-brand-icon">
                     <i class="bi bi-clipboard-check"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SIPEKA IGAPIN</div>
+                <div class="sidebar-brand-text mx-3">KINERJA+ IGAPIN</div>
             </a>
 
             <!-- Divider -->

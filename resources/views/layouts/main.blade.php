@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SIPEKA</title>
+    <title>KINERJA+</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('clipboard-check.svg') }}">
