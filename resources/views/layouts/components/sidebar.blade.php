@@ -11,6 +11,11 @@
             "icon" => "bi bi-diagram-3",
         ],
         [
+            "title" => "Jurnal",
+            "path" => "/journals",
+            "icon" => "bi bi-journal-text",
+        ],
+        [
             "title" => "Kriteria",
             "path" => "/criterias",
             "icon" => "bi bi-list-check",

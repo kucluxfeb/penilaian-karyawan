@@ -17,4 +17,9 @@ class Employee extends Model
     {
         return $this->hasMany(Assessment::class);
     }
+
+    public function journals()
+    {
+        return $this->hasMany(Journals::class);
+    }
 }

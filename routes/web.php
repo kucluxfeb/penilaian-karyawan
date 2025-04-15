@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DivisionController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\JournalController;
 use App\Http\Controllers\Assessment\AssessmentController;
 use App\Http\Controllers\Assessment\CriteriaController;
 use App\Http\Controllers\Assessment\SubCriteriaController;
@@ -42,3 +43,10 @@ Route::get('/assessments', [AssessmentController::class, 'index'])->name('index.
 Route::post('/assessment/store', [AssessmentController::class, 'store'])->name('store.assessment');
 Route::get('/assessment/result', [AssessmentController::class, 'result'])->name('result.assessment');
 Route::get('/result/export/{format}', [AssessmentController::class, 'export'])->name('export.assessment');
+
+Route::get('/journals', [JournalController::class, 'index'])->name('index.journals');
+Route::get('/journal/create', [JournalController::class, 'create'])->name('create.journal');
+Route::post('journal/store', [JournalController::class, 'store'])->name('store.journal');
+Route::get('/journal/edit/{id}', [JournalController::class, 'edit'])->name('edit.journal');
+Route::put('/journal/{id}', [JournalController::class, 'update'])->name('update.journal');
+Route::delete('/journal/{id}', [EmployeeController::class, 'destroy'])->name('destroy.journal');

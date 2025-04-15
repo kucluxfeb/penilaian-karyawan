@@ -59,8 +59,8 @@ class DivisionController extends Controller
 
     public function destroy($id)
     {
-        $customer = Division::FindOrFail($id);
-        $customer->delete();
+        $division = Division::FindOrFail($id);
+        $division->delete();
 
         return redirect()->route('index.divisions')->with('success', 'Divisi berhasil dihapus!');
     }
