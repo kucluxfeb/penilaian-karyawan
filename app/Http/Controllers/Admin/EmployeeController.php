@@ -5,13 +5,25 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role === 'Karyawan') {
+            $employee = Employee::where('user_id', auth()->id())->with('division')->first();
+
+            if (!$employee) {
+                return redirect()->route('dashboard.admin')->with('error', 'Karyawan tidak ditemukan! Tunggu admin menambahkan data anda.');
+            }
+
+            return view('pages.employees.show', compact('employee'));
+        }
+
         $employees = Employee::with('division')->get();
 
         return view('pages.employees.index', compact('employees'));
@@ -21,13 +33,21 @@ class EmployeeController extends Controller
     {
         $divisions = Division::all();
 
-        return view('pages.employees.create', compact('divisions'));
+        // Ambil user yang belum punya relasi employee dan role-nya Karyawan
+        $users = User::where('role', 'Karyawan')
+            ->doesntHave('employee')
+            ->get();
+
+        $employee = null;
+
+        return view('pages.employees.create', compact('divisions', 'users', 'employee'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'fullname' => 'required',
+            'user_id' => 'required|exists:users,id|unique:employees,user_id',
             'division_id' => 'required',
             'nip' => 'required',
             'gender' => 'required',
@@ -37,6 +57,9 @@ class EmployeeController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'fullname.required' => "Nama lengkap tidak boleh kosong!",
+            'user_id.required' => "User wajib dipilih!",
+            'user_id.exists' => "User tidak valid!",
+            'user_id.unique' => "User ini sudah memiliki data karyawan!",
             'division_id.required' => "Divisi tidak boleh kosong!",
             'nip.required' => "NIP tidak boleh kosong!",
             'gender.required' => "Jenis kelamin tidak boleh kosong!",
@@ -63,7 +86,11 @@ class EmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $divisions = Division::all();
 
-        return view('pages.employees.edit', compact('employee', 'divisions'));
+        $users = User::where('role', 'Karyawan')
+            ->doesntHave('employee')
+            ->get();
+
+        return view('pages.employees.edit', compact('employee', 'divisions', 'users'));
     }
 
     public function update(Request $request, $id)
@@ -72,6 +99,11 @@ class EmployeeController extends Controller
 
         $data = $request->validate([
             'fullname' => 'required',
+            'user_id' => [
+                'required',
+                'exists:users,id',
+                Rule::unique('employees', 'user_id')->ignore($employee->id),
+            ],
             'division_id' => 'required',
             'nip' => 'required',
             'gender' => 'required',
@@ -81,6 +113,9 @@ class EmployeeController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'fullname.required' => "Nama lengkap tidak boleh kosong!",
+            'user_id.required' => "User wajib dipilih!",
+            'user_id.exists' => "User tidak valid!",
+            'user_id.unique' => "User ini sudah memiliki data karyawan!",
             'division_id.required' => "Divisi tidak boleh kosong!",
             'nip.required' => "NIP tidak boleh kosong!",
             'gender.required' => "Jenis kelamin tidak boleh kosong!",

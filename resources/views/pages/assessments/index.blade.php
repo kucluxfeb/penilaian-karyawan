@@ -7,8 +7,6 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    <a href="{{ route("result.assessment") }}" class="btn btn-primary mb-3">Hasil Penilaian</a>
-
                     <form action="{{ route("store.assessment") }}" method="POST">
                         @csrf
                         @method('POST')

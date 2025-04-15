@@ -7,7 +7,9 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
+                    @if (auth()->user()->role === 'Admin')
                     <a href="{{ route('create.employee') }}" class="btn btn-primary mb-3">Tambah Karyawan</a>
+                    @endif
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -41,6 +43,7 @@
                                     <td>{{ $employee->birth_place }}</td>
                                     <td>{{ \Carbon\Carbon::parse($employee->birth_date)->format('d-m-Y') }}</td>
                                     <td>{{ $employee->address }}</td>
+                                    @if (auth()->user()->role === 'Admin')
                                     <td>
                                         <div class="d-flex">
                                             <form id="deleteForm{{ $employee->id }}" action="{{ route('destroy.employee', $employee->id) }}" method="POST">
@@ -57,6 +60,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

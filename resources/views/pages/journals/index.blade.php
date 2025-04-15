@@ -7,7 +7,11 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="table-responsive">
+                    @auth
+                    @if (auth()->user()->role === 'Karyawan')
                     <a href="{{ route('create.journal') }}" class="btn btn-primary mb-3">Tambah Jurnal</a>
+                    @endif
+                    @endauth
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -32,6 +36,7 @@
                                     <td>{{ $journal->solution }}</td>
                                     <td>{{ $journal->note }}</td>
                                     <td>
+                                        @if (auth()->user()->role === 'Karyawan')
                                         <div class="d-flex">
                                             <form id="deleteForm{{ $journal->id }}" action="{{ route('destroy.journal', $journal->id) }}" method="POST">
                                                 @csrf
@@ -46,6 +51,9 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                         </div>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

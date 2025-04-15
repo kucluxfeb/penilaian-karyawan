@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $fillable = ['division_id', 'fullname', 'nip', 'gender', 'birth_place', 'birth_date', 'address', 'photo'];
+    protected $fillable = ['division_id', 'user_id', 'fullname', 'nip', 'gender', 'birth_place', 'birth_date', 'address', 'photo'];
 
     public function division()
     {
@@ -21,5 +21,10 @@ class Employee extends Model
     public function journals()
     {
         return $this->hasMany(Journals::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

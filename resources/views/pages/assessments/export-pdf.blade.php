@@ -10,6 +10,18 @@
 </head>
 <body>
     <h2>Hasil Penilaian Pegawai</h2>
+
+    <p>
+        Periode:
+        @if ($filter_by === 'bulanan')
+            Bulan {{ \Carbon\Carbon::create()->month((int) $month)->translatedFormat('F') }} {{ $year }}
+        @elseif ($filter_by === 'semester')
+            Semester {{ $semester }} Tahun {{ $year }}
+        @elseif ($filter_by === 'tahunan')
+            Tahun {{ $year }}
+        @endif
+    </p>
+
     <table>
         <thead>
             <tr>

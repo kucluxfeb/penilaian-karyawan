@@ -1,29 +1,42 @@
 @php
+    $role = auth()->user()->role;
+
     $menuList = [
         [
             "title" => "Karyawan",
             "path" => "/employees",
             "icon" => "bi bi-person-lines-fill",
+            "roles" => ["Admin", "Karyawan"],
         ],
         [
             "title" => "Divisi",
             "path" => "/divisions",
             "icon" => "bi bi-diagram-3",
+            "roles" => ["Admin"],
         ],
         [
             "title" => "Jurnal",
             "path" => "/journals",
             "icon" => "bi bi-journal-text",
+            "roles" => ["Admin", "Karyawan", "Tim Penilai"],
         ],
         [
             "title" => "Kriteria",
             "path" => "/criterias",
             "icon" => "bi bi-list-check",
+            "roles" => ["Admin", "Tim Penilai"],
         ],
         [
             "title" => "Penilaian",
             "path" => "/assessments",
             "icon" => "bi bi-star-half",
+            "roles" => ["Tim Penilai", "Kepala Sekolah"],
+        ],
+        [
+            "title" => "Hasil Penilaian",
+            "path" => "/assessment/result",
+            "icon" => "bi bi-star-fill",
+            "roles" => ["Admin", "Tim Penilai", "Kepala Sekolah"],
         ],
     ];
 @endphp
@@ -60,12 +73,14 @@
 
             <!-- Nav Item -->
             @foreach ($menuList as $menu)
-                <li class="nav-item {{ request()->is(ltrim($menu['path'], '/')) ? 'active' : '' }}">
-                    <a href="{{ $menu['path'] }}" class="nav-link">
-                        <i class="{{ $menu['icon'] }}"></i>
-                        <span>{{ $menu['title'] }}</span>
-                    </a>
-                </li>
+            @if (in_array($role, $menu['roles']))
+            <li class="nav-item {{ request()->is(ltrim($menu['path'], '/')) ? 'active' : '' }}">
+                <a href="{{ $menu['path'] }}" class="nav-link">
+                    <i class="{{ $menu['icon'] }}"></i>
+                    <span>{{ $menu['title'] }}</span>
+                </a>
+            </li>
+            @endif
             @endforeach
 
             <!-- Divider -->

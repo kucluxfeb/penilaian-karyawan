@@ -12,10 +12,15 @@ use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard.admin');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.admin');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('view.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/register', [AuthController::class, 'showRegister'])->name('view.register');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware(['auth', CheckRole::class.':Admin'])->group(function () {
     Route::get('/divisions', [DivisionController::class, 'index'])->name('index.divisions');
@@ -26,25 +31,16 @@ Route::middleware(['auth', CheckRole::class.':Admin'])->group(function () {
     Route::delete('/division/{id}', [DivisionController::class, 'destroy'])->name('destroy.division');
 });
 
-Route::middleware(['auth', CheckRole::class.':Admin, Karyawan'])->group(function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard.admin');
-
+Route::middleware(['auth', CheckRole::class.':Admin,Karyawan'])->group(function () {
     Route::get('/employees', [EmployeeController::class, 'index'])->name('index.employees');
     Route::get('/employee/create', [EmployeeController::class, 'create'])->name('create.employee');
     Route::post('employee/store', [EmployeeController::class, 'store'])->name('store.employee');
     Route::get('/employee/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
     Route::put('/employee/{id}', [EmployeeController::class, 'update'])->name('update.employee');
     Route::delete('/employee/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
-
-    Route::get('/journals', [JournalController::class, 'index'])->name('index.journals');
-    Route::get('/journal/create', [JournalController::class, 'create'])->name('create.journal');
-    Route::post('journal/store', [JournalController::class, 'store'])->name('store.journal');
-    Route::get('/journal/edit/{id}', [JournalController::class, 'edit'])->name('edit.journal');
-    Route::put('/journal/{id}', [JournalController::class, 'update'])->name('update.journal');
-    Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('destroy.journal');
 });
 
-Route::middleware(['auth', CheckRole::class.':Admin, Tim Penilai'])->group(function () {
+Route::middleware(['auth', CheckRole::class.':Admin,Tim Penilai'])->group(function () {
     Route::get('/criterias', [CriteriaController::class, 'index'])->name('index.criterias');
     Route::get('/criteria/create', [CriteriaController::class, 'create'])->name('create.criteria');
     Route::post('criteria/store', [CriteriaController::class, 'store'])->name('store.criteria');
@@ -60,7 +56,16 @@ Route::middleware(['auth', CheckRole::class.':Admin, Tim Penilai'])->group(funct
     Route::delete('/sub-criteria/{id}', [SubCriteriaController::class, 'destroy'])->name('destroy.subCriteria');
 });
 
-Route::middleware(['auth', CheckRole::class.':Admin, Tim Penilai, Kepala Sekolah'])->group(function () {
+Route::middleware(['auth', CheckRole::class.':Admin,Karyawan,Tim Penilai'])->group(function () {
+    Route::get('/journals', [JournalController::class, 'index'])->name('index.journals');
+    Route::get('/journal/create', [JournalController::class, 'create'])->name('create.journal');
+    Route::post('journal/store', [JournalController::class, 'store'])->name('store.journal');
+    Route::get('/journal/edit/{id}', [JournalController::class, 'edit'])->name('edit.journal');
+    Route::put('/journal/{id}', [JournalController::class, 'update'])->name('update.journal');
+    Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('destroy.journal');
+});
+
+Route::middleware(['auth', CheckRole::class.':Admin,Tim Penilai,Kepala Sekolah'])->group(function () {
     Route::get('/assessments', [AssessmentController::class, 'index'])->name('index.assessments');
     Route::post('/assessment/store', [AssessmentController::class, 'store'])->name('store.assessment');
     Route::get('/assessment/result', [AssessmentController::class, 'result'])->name('result.assessment');

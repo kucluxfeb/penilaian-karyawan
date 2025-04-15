@@ -1,3 +1,8 @@
+@php
+$employeeId = auth()->user()->employee->id;
+$employeeName = auth()->user()->employee->fullname;
+@endphp
+
 @extends('layouts.main')
 
 @section('content')
@@ -14,16 +19,9 @@
                 @method('POST')
 
                 <div class="form-group">
-                    <label for="employee_id" class="form-label">Nama Karyawan</label>
-                    <select name="employee_id" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror">
-                        <option value="" disabled selected>Pilih Nama Karyawan</option>
-                        @foreach ($employees as $employee)
-                            <option value="{{ $employee->id }}" {{ old('employee_id') == $employee->id ? 'selected' : '' }}>{{ $employee->fullname }}</option>
-                        @endforeach
-                    </select>
-                    @error('employee_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="employee">Nama Karyawan</label>
+                    <input type="text" class="form-control" value="{{ $employeeName }}" disabled>
+                    <input type="hidden" name="employee_id" value="{{ $employeeId }}">
                 </div>
 
                 <div class="form-group">

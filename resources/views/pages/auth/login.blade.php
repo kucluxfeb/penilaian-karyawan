@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('box-arrow-in-left.svg') }}">
+    <title>Masuk</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/box-arrow-in-left.svg') }}">
     <link href="{{ asset('templates/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -50,7 +50,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        {{-- <a class="small" href="{{ route('view.register')}}">Buat akun baru!</a> --}}
+                                        <a class="small" href="{{ route('view.register')}}">Buat akun baru!</a>
                                     </div>
                                 </div>
                             </div>

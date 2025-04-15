@@ -20,6 +20,19 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <div class="form-group">
+                    <label for="user_id">Akun User</label>
+                    <select name="user_id" class="form-control">
+                        <option value="" disabled selected>-- Pilih User --</option>
+                        @foreach ($users as $user)
+                        <option value="{{ $user->id }}" 
+                            {{ optional($employee)->user_id == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }} - {{ $user->email }}
+                        </option>                        
+                        @endforeach
+                    </select>
+                </div>
     
                 <div class="form-group">
                     <label for="division_id" class="form-label">Divisi</label>

@@ -16,11 +16,11 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-                'name' => 'Admin',
-                'email' => 'admin@gmail.com',
+                'name' => 'Karyawan 2',
+                'email' => 'karyawan2@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'Admin',
-            ]
+                'role' => 'Karyawan',
+            ],
             ]);
     }
 }
